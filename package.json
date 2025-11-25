@@ -1,0 +1,61 @@
+{
+  "name": "@ainarsklavins/date-mcp",
+  "version": "1.0.0",
+  "description": "MCP server providing date, time, and timezone tools for Claude and other MCP clients",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "date-mcp": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "date",
+    "time",
+    "timezone",
+    "claude",
+    "ai-tools"
+  ],
+  "author": "Ainars Klavins",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ainarsklavins/date-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ainarsklavins/date-mcp/issues"
+  },
+  "homepage": "https://github.com/ainarsklavins/date-mcp#readme",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.22.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
+  }
+}
