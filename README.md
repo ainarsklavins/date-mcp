@@ -3,15 +3,35 @@
 [![npm version](https://badge.fury.io/js/%40ainarsklavins%2Fdate-mcp.svg)](https://www.npmjs.com/package/@ainarsklavins/date-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-An MCP server that provides real-time date, time, and timezone information to AI assistants like Claude.
+An MCP server that provides real-time date, time, and timezone information to AI assistants.
 
 ## Why Use This?
 
 AI models don't inherently know the current date or time. This MCP server solves that by providing tools that return accurate, real-time temporal information.
 
-## Quick Start
+## Installation
 
-### Claude Code
+### Claude Desktop
+
+Add to your Claude Desktop configuration file:
+
+| OS | Path |
+|----|------|
+| macOS | `~/Library/Application Support/Claude/claude_desktop_config.json` |
+| Windows | `%APPDATA%\Claude\claude_desktop_config.json` |
+
+```json
+{
+  "mcpServers": {
+    "date-mcp": {
+      "command": "npx",
+      "args": ["-y", "@ainarsklavins/date-mcp"]
+    }
+  }
+}
+```
+
+### Claude Code (CLI)
 
 Add to `~/.claude/settings.json`:
 
@@ -26,14 +46,42 @@ Add to `~/.claude/settings.json`:
 }
 ```
 
-### Claude Desktop
+### VS Code
 
-Add to your config file:
+[![Install with NPX in VS Code](https://img.shields.io/badge/VS_Code-NPM-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=date-mcp&config=%7B%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40ainarsklavins%2Fdate-mcp%22%5D%7D)
+[![Install with NPX in VS Code Insiders](https://img.shields.io/badge/VS_Code_Insiders-NPM-24bfa5?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=date-mcp&config=%7B%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40ainarsklavins%2Fdate-mcp%22%5D%7D&quality=insiders)
 
-| OS | Path |
-|----|------|
-| macOS | `~/Library/Application Support/Claude/claude_desktop_config.json` |
-| Windows | `%APPDATA%\Claude\claude_desktop_config.json` |
+Or manually add to your VS Code MCP settings (`Ctrl+Shift+P` → "MCP: Open User Configuration"):
+
+```json
+{
+  "servers": {
+    "date-mcp": {
+      "command": "npx",
+      "args": ["-y", "@ainarsklavins/date-mcp"]
+    }
+  }
+}
+```
+
+### Cursor
+
+Add to Cursor's MCP settings (Settings → MCP Servers):
+
+```json
+{
+  "mcpServers": {
+    "date-mcp": {
+      "command": "npx",
+      "args": ["-y", "@ainarsklavins/date-mcp"]
+    }
+  }
+}
+```
+
+### Windsurf
+
+Add to `~/.codeium/windsurf/mcp_config.json`:
 
 ```json
 {
@@ -53,16 +101,7 @@ Add to your config file:
 npm install -g @ainarsklavins/date-mcp
 ```
 
-Then configure with just:
-```json
-{
-  "mcpServers": {
-    "date-mcp": {
-      "command": "date-mcp"
-    }
-  }
-}
-```
+Then use `"command": "date-mcp"` instead of npx in any configuration above.
 </details>
 
 ## Available Tools
@@ -165,6 +204,14 @@ Uses IANA timezone database. Common examples:
 
 Full list: [IANA Time Zone Database](https://www.iana.org/time-zones)
 
+## Debugging
+
+You can use the MCP Inspector to debug the server:
+
+```bash
+npx @modelcontextprotocol/inspector npx -y @ainarsklavins/date-mcp
+```
+
 ## Development
 
 ```bash
@@ -176,16 +223,8 @@ npm run build
 
 ### Testing Locally
 
-```bash
-# Test with MCP Inspector
-npx @modelcontextprotocol/inspector node dist/index.js
+Add to Claude Code with direct path:
 
-# Or add to Claude Code with direct path (see below)
-```
-
-**Local testing with Claude Code:**
-
-Add to `~/.claude/settings.json`:
 ```json
 {
   "mcpServers": {
