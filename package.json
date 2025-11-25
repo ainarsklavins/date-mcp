@@ -1,6 +1,6 @@
 {
   "name": "@ainarsklavins/date-mcp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MCP server providing date, time, and timezone tools for Claude and other MCP clients",
   "type": "module",
   "exports": {
