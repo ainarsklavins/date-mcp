@@ -1,25 +1,19 @@
 # @ainarsklavins/date-mcp
 
-An MCP (Model Context Protocol) server that provides date, time, and timezone tools for Claude and other MCP-compatible clients.
+[![npm version](https://badge.fury.io/js/%40ainarsklavins%2Fdate-mcp.svg)](https://www.npmjs.com/package/@ainarsklavins/date-mcp)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Why?
+An MCP server that provides real-time date, time, and timezone information to AI assistants like Claude.
 
-AI models often don't know the current date or time. This MCP server gives them accurate, real-time date/time information.
+## Why Use This?
 
-## Features
+AI models don't inherently know the current date or time. This MCP server solves that by providing tools that return accurate, real-time temporal information.
 
-- **get-current-datetime** - Get current date and time with optional timezone
-- **get-day-of-week** - Get day name and number for any date
-- **get-timezone-info** - Get timezone offset, abbreviation, and details
-- **format-date** - Format dates in short/medium/long/full styles
+## Quick Start
 
-All tools support IANA timezone names (e.g., `America/New_York`, `Europe/London`, `UTC`).
+### Claude Code
 
-## Installation
-
-### For Claude Code (CLI)
-
-Add to your Claude settings (`~/.claude/settings.json`):
+Add to `~/.claude/settings.json`:
 
 ```json
 {
@@ -32,12 +26,14 @@ Add to your Claude settings (`~/.claude/settings.json`):
 }
 ```
 
-### For Claude Desktop
+### Claude Desktop
 
-Add to your `claude_desktop_config.json`:
+Add to your config file:
 
-**macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
-**Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+| OS | Path |
+|----|------|
+| macOS | `~/Library/Application Support/Claude/claude_desktop_config.json` |
+| Windows | `%APPDATA%\Claude\claude_desktop_config.json` |
 
 ```json
 {
@@ -50,14 +46,14 @@ Add to your `claude_desktop_config.json`:
 }
 ```
 
-### Global Installation (Alternative)
+<details>
+<summary>Alternative: Global Installation</summary>
 
 ```bash
 npm install -g @ainarsklavins/date-mcp
 ```
 
-Then configure:
-
+Then configure with just:
 ```json
 {
   "mcpServers": {
@@ -67,17 +63,29 @@ Then configure:
   }
 }
 ```
+</details>
 
 ## Available Tools
+
+| Tool | Description | Read-only |
+|------|-------------|-----------|
+| `get-current-datetime` | Get current date/time with timezone | Yes |
+| `get-day-of-week` | Get day name for any date | Yes |
+| `get-timezone-info` | Get timezone offset and details | Yes |
+| `format-date` | Format dates in various styles | Yes |
+
+All tools are read-only and have no side effects.
 
 ### get-current-datetime
 
 Returns the current date and time.
 
 **Parameters:**
-- `timezone` (optional): IANA timezone name
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `timezone` | string | No | IANA timezone (e.g., `America/New_York`) |
 
-**Example Response:**
+**Example:**
 ```json
 {
   "iso": "2024-12-15T14:30:00.000Z",
@@ -92,10 +100,12 @@ Returns the current date and time.
 Returns the day of the week for a given date.
 
 **Parameters:**
-- `date` (optional): Date in YYYY-MM-DD format (defaults to today)
-- `locale` (optional): Locale for day name (e.g., "en-US", "de-DE")
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `date` | string | No | Date in YYYY-MM-DD format (defaults to today) |
+| `locale` | string | No | Locale code (e.g., `en-US`, `de-DE`) |
 
-**Example Response:**
+**Example:**
 ```json
 {
   "dayName": "Sunday",
@@ -106,12 +116,14 @@ Returns the day of the week for a given date.
 
 ### get-timezone-info
 
-Returns timezone information.
+Returns detailed timezone information.
 
 **Parameters:**
-- `timezone` (optional): IANA timezone name
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `timezone` | string | No | IANA timezone name |
 
-**Example Response:**
+**Example:**
 ```json
 {
   "timezone": "America/New_York",
@@ -126,11 +138,13 @@ Returns timezone information.
 Formats a date in various styles.
 
 **Parameters:**
-- `date` (optional): Date in ISO format (defaults to today)
-- `style` (optional): `short`, `medium`, `long`, or `full`
-- `locale` (optional): Locale code (e.g., "en-US", "fr-FR")
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `date` | string | No | Date in ISO format (defaults to today) |
+| `style` | string | No | `short`, `medium`, `long`, or `full` |
+| `locale` | string | No | Locale code (e.g., `en-US`, `fr-FR`) |
 
-**Example Response:**
+**Example:**
 ```json
 {
   "formatted": "December 15, 2024",
@@ -142,35 +156,47 @@ Formats a date in various styles.
 
 ## Supported Timezones
 
-Common examples:
-- `America/New_York`
-- `America/Los_Angeles`
-- `Europe/London`
-- `Europe/Paris`
-- `Asia/Tokyo`
-- `Asia/Shanghai`
+Uses IANA timezone database. Common examples:
+- `America/New_York`, `America/Los_Angeles`, `America/Chicago`
+- `Europe/London`, `Europe/Paris`, `Europe/Berlin`
+- `Asia/Tokyo`, `Asia/Shanghai`, `Asia/Singapore`
 - `Australia/Sydney`
 - `UTC`
 
-See [IANA Time Zone Database](https://www.iana.org/time-zones) for the full list.
+Full list: [IANA Time Zone Database](https://www.iana.org/time-zones)
 
 ## Development
 
 ```bash
-# Clone the repo
 git clone https://github.com/ainarsklavins/date-mcp.git
 cd date-mcp
-
-# Install dependencies
 npm install
-
-# Build
 npm run build
+```
 
-# Watch mode
-npm run dev
+### Testing Locally
+
+```bash
+# Test with MCP Inspector
+npx @modelcontextprotocol/inspector node dist/index.js
+
+# Or add to Claude Code with direct path (see below)
+```
+
+**Local testing with Claude Code:**
+
+Add to `~/.claude/settings.json`:
+```json
+{
+  "mcpServers": {
+    "date-mcp": {
+      "command": "node",
+      "args": ["/path/to/date-mcp/dist/index.js"]
+    }
+  }
+}
 ```
 
 ## License
 
-MIT
+MIT - see [LICENSE](LICENSE)
