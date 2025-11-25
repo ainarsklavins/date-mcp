@@ -33,6 +33,13 @@ Add to your Claude Desktop configuration file:
 
 ### Claude Code (CLI)
 
+```bash
+claude mcp add --scope user date-mcp -- npx -y @ainarsklavins/date-mcp
+```
+
+<details>
+<summary>Manual configuration</summary>
+
 Add to `~/.claude/settings.json`:
 
 ```json
@@ -45,6 +52,7 @@ Add to `~/.claude/settings.json`:
   }
 }
 ```
+</details>
 
 ### VS Code
 
