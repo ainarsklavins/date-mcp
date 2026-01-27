@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "setup": "./scripts/setup.sh",
+    "run": "npm run dev -- --port $CONDUCTOR_PORT",
+    "archive": "./scripts/archive.sh"
+  },
+  "runScriptMode": "nonconcurrent"
+}
