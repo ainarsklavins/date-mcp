@@ -1,8 +1,8 @@
 {
   "scripts": {
-    "setup": "./scripts/setup.sh",
-    "run": "npm run dev -- --port $CONDUCTOR_PORT",
-    "archive": "./scripts/archive.sh"
+    "setup": "cd \"$CONDUCTOR_WORKSPACE_PATH\" && \"$CONDUCTOR_ROOT_PATH/scripts/setup.sh\"",
+    "run": "cd \"$CONDUCTOR_WORKSPACE_PATH\" && npm run dev -- --port $CONDUCTOR_PORT",
+    "archive": "cd \"$CONDUCTOR_WORKSPACE_PATH\" && \"$CONDUCTOR_ROOT_PATH/scripts/archive.sh\""
   },
   "runScriptMode": "nonconcurrent"
 }
